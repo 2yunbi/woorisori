@@ -1,0 +1,73 @@
+input[type="text"] {
+    border: none;
+}
+.inputForm {
+    display: flex;
+    justify-content: center;   /* 가로 가운데 */
+    align-items: center;       /* 세로 가운데 */
+    /*min-height: 80vh;*/          /* 화면 높이의 80% 차지하게 해서 가운데 정렬 유도 */
+}
+
+.form_group {
+    width: 550px;              /* 폼의 고정 너비 */
+    padding: 30px;
+}
+
+.form_item {
+    top: 10px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    box-sizing: border-box;
+    max-width: 100%;
+    min-height: 50px;
+    padding: 0 10px 0 45px;
+}
+.form_item::before {
+    position: absolute;
+    top: 10px;
+    left: 9px;
+    content: '';
+}
+.form_item::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: inherit;
+    border: 1px solid #dfdfdf;
+    pointer-events: none;
+    content: '';
+}
+
+/* form_item > input */
+.inputItem {
+    padding-left: 10px;
+    width: 85%;
+}
+
+.alert-block {
+    padding: 0 10px 0 45px;
+    color: red;
+}
+
+/* button */
+.form_submit {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+button[type="submit"] {
+    padding: 10px 40px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #555;
+}
