@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -20,10 +21,11 @@ public class MemberService {
 
     /**
      * 회원가입
+     *
      * @param member
      * @return
      */
-    public Long join (Member member) {
+    public Long join(Member member) {
         validateDuplicateMember(member);
         memberRepository.save(member);
         return member.getId();
@@ -38,6 +40,7 @@ public class MemberService {
 
     /**
      * 전체 회원 조회
+     *
      * @return
      */
     public List<Member> findMembers() {
@@ -46,5 +49,11 @@ public class MemberService {
 
     public boolean isEmpNoExists(String empNo) {
         return memberRepository.findByEmpNo(empNo).isPresent();
+    }
+
+    public boolean login(String inputEmpNo, String inputPassword) {
+        return memberRepository.findByEmpNo(inputEmpNo)
+                .filter(member -> member.getPassword().equals(inputPassword))
+                .isPresent();
     }
 }

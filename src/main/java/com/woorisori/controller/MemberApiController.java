@@ -1,6 +1,7 @@
 package com.woorisori.controller;
 
 import com.woorisori.service.MemberService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,4 +24,5 @@ public class MemberApiController {
         boolean exists = memberService.isEmpNoExists(empNo);
         return Collections.singletonMap("exists", exists);
     }
+
 }

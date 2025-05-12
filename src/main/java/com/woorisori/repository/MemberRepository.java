@@ -1,7 +1,6 @@
 package com.woorisori.repository;
 
 import com.woorisori.domain.member.Member;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
