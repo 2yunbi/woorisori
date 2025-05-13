@@ -1,3 +1,20 @@
+.centered-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px; /* 모바일 대응용 여백 */
+}
+
+.navTopMenu {
+    max-width: 100%;
+    justify-content: right;
+}
+
+.banner-img {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
 input[type="text"] {
     border: none;
 }
