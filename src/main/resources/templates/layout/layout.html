@@ -9,6 +9,11 @@
 </head>
 <body>
 
+<div class="centered-container">
+
+<!-- 네비게이션 삽입 -->
+    <div th:replace="fragments/navTop :: navTop"></div>
+
 <!-- 헤더 삽입 -->
 <div th:replace="fragments/header :: header"></div>
 
@@ -23,6 +28,8 @@
 
 <!-- 푸터 삽입 -->
 <div th:replace="fragments/footer :: footer"></div>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
