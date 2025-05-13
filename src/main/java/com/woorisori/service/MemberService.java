@@ -51,10 +51,9 @@ public class MemberService {
         return memberRepository.findByEmpNo(empNo).isPresent();
     }
 
-    public Member login(String inputEmpNo, String inputPassword) {
+    public boolean login(String inputEmpNo, String inputPassword) {
         return memberRepository.findByEmpNo(inputEmpNo)
                 .filter(member -> member.getPassword().equals(inputPassword))
-                .orElse(null);
+                .isPresent();
     }
-
 }
