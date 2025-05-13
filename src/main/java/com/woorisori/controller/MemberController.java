@@ -2,6 +2,7 @@ package com.woorisori.controller;
 
 import com.woorisori.domain.member.Member;
 import com.woorisori.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,19 +46,26 @@ public class MemberController {
     }
 
     @PostMapping("/members/login")
-    public String login(@RequestParam String empNo, @RequestParam String password, Model model) {
-        boolean result = memberService.login(empNo, password);
-        if (result) {
-            return "redirect:/";
-        } {
-            model.addAttribute("result", "no");
-            return "members/login";
+    public String login(@RequestParam String empNo, @RequestParam String password, HttpServletRequest request, Model model) {
+        Member loginmember = memberService.login(empNo, password);
+
+        if (loginmember == null) {
+            model.addAttribute("result", "fail");
+            return "/members/login";
         }
 
+        HttpSession session = request.getSession();
+        session.setAttribute("loginMember", loginmember);
+
+        return "redirect:/";
     }
 
     @GetMapping("/members")
-    public String members(Model model) {
+    public String members(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return "/members/login";
+        }
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);
         return "members/memberList";

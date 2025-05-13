@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <th:block th:if="${result} != null">
+            <th:block th:if="${result} == fail">
                 <div class="alert-block msg">사번 또는 비밀번호가 잘못 되었습니다. 사번과 비밀번호를 정확히 입력해 주세요.</div>
             </th:block>
             <div class="form_submit">
