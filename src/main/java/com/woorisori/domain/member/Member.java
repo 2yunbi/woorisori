@@ -1,18 +1,52 @@
 package com.woorisori.domain.member;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name="member")
 public class Member {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String empNo;
     private String password;
+
     private String userName;
     private String email;
     private MemberRole role;
 
-    private LocalDate joinDate;
 
-    private LocalDate retirementDate;
+    private MemberRole isUse;
+
+
+    private LocalDateTime joinDate;
+
+    private LocalDateTime modifyDate;
+
+    private LocalDateTime deleteDate;
+
+    public Member() {
+
+    }
+    public Member(String empNo, String userName) {
+        this.empNo = empNo;
+        this.userName = userName;
+    }
+
+    @PrePersist
+    public void prePersist() {
+
+        if (this.joinDate == null) {
+            this.joinDate = LocalDateTime.now();
+        }
+        if (this.modifyDate == null) {
+            this.modifyDate = LocalDateTime.now();
+        }
+    }
 
     public Long getId() {
         return id;
@@ -62,19 +96,35 @@ public class Member {
         this.role = role;
     }
 
-    public LocalDate getJoinDate() {
+    public LocalDateTime getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(LocalDate joinDate) {
+    public void setJoinDate(LocalDateTime joinDate) {
         this.joinDate = joinDate;
     }
 
-    public LocalDate getRetirementDate() {
-        return retirementDate;
+    public MemberRole getIsUse() {
+        return isUse;
     }
 
-    public void setRetirementDate(LocalDate retirementDate) {
-        this.retirementDate = retirementDate;
+    public void setIsUse(MemberRole isUse) {
+        this.isUse = isUse;
+    }
+
+    public LocalDateTime getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(LocalDateTime modifyDate) {
+        this.modifyDate = modifyDate;
+    }
+
+    public LocalDateTime getDeleteDate() {
+        return deleteDate;
+    }
+
+    public void setDeleteDate(LocalDateTime deleteDate) {
+        this.deleteDate = deleteDate;
     }
 }

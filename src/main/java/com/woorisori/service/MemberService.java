@@ -2,6 +2,7 @@ package com.woorisori.service;
 
 import com.woorisori.domain.member.Member;
 import com.woorisori.repository.MemberRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class MemberService {
 
     @Autowired
