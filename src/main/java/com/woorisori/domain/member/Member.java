@@ -13,15 +13,15 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String empNo;
+
+    @Column(name="password")
     private String password;
 
     private String userName;
     private String email;
     private MemberRole role;
 
-
     private MemberRole isUse;
-
 
     private LocalDateTime joinDate;
 
