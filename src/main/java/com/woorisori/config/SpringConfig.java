@@ -1,4 +1,4 @@
-package com.woorisori;
+package com.woorisori.config;
 
 import com.woorisori.repository.JPAMemberRepository;
 import com.woorisori.repository.MemberRepository;
@@ -13,11 +13,6 @@ public class SpringConfig {
 
     public SpringConfig(EntityManager em) {
         this.em = em;
-    }
-
-    @Bean
-    public MemberService memberService() {
-        return new MemberService(memberRepository());
     }
 
     @Bean

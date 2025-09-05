@@ -1,20 +1,25 @@
 package com.woorisori.controller;
 
 import com.woorisori.domain.member.Member;
+import com.woorisori.dto.MemberDto;
 import com.woorisori.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/members")
 public class MemberController {
     @Autowired
     private final MemberService memberService;
@@ -23,29 +28,34 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/members/new")
-    public String createForm() {
+    @GetMapping("/new")
+    public String createForm(Model model) {
+        model.addAttribute("form", new MemberDto.SignUpRequest());
         return "members/createMemberForm";
     }
 
-    @PostMapping("/members/new")
-    public String create(MemberForm form) {
+    @PostMapping("/new")
+    public String create(@Valid @ModelAttribute("form") MemberDto.SignUpRequest form, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "members/createMemberForm";
+        }
+
         Member member = new Member();
         member.setEmpNo(form.getEmpNo());
-        member.setUserName(form.getUserName());
         member.setPassword(form.getPassword());
+        member.setUserName(form.getUserName());
+        member.setEmail(form.getEmail());
 
         memberService.join(member);
-
         return "redirect:/";
     }
 
-    @GetMapping("/members/login")
+    @GetMapping("/login")
     public String loginForm() {
         return "members/login";
     }
 
-    @PostMapping("/members/login")
+    @PostMapping("/login")
     public String login(@RequestParam String empNo, @RequestParam String password, Model model, HttpServletRequest request) {
         Member member = memberService.login(empNo, password);
 
@@ -65,7 +75,7 @@ public class MemberController {
 
     }
 
-    @PostMapping("/members/logout")
+    @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {

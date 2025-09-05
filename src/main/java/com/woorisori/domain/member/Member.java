@@ -12,16 +12,17 @@ public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String empNo;
 
-    @Column(name="password")
+    @Column(nullable = false, unique = true, length = 50)
+    private String empNo;
+    @Column(name="password", nullable = false, length = 255)
     private String password;
 
     private String userName;
     private String email;
-    private MemberRole role;
+    private String role;
 
-    private MemberRole isUse;
+    private String  isUse;
 
     private LocalDateTime joinDate;
 
@@ -88,12 +89,20 @@ public class Member {
         this.email = email;
     }
 
-    public MemberRole getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(MemberRole role) {
+    public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getIsUse() {
+        return isUse;
+    }
+
+    public void setIsUse(String isUse) {
+        this.isUse = isUse;
     }
 
     public LocalDateTime getJoinDate() {
@@ -102,14 +111,6 @@ public class Member {
 
     public void setJoinDate(LocalDateTime joinDate) {
         this.joinDate = joinDate;
-    }
-
-    public MemberRole getIsUse() {
-        return isUse;
-    }
-
-    public void setIsUse(MemberRole isUse) {
-        this.isUse = isUse;
     }
 
     public LocalDateTime getModifyDate() {

@@ -10,23 +10,23 @@
 </head>
 <section layout:fragment="content">
 <div class="container inputForm">
-    <form action="/members/new" method="post">
+    <form th:action="@{/members/new}" method="post" th:object="${form}">
         <div class="form_group">
             <div class="form_item">
                 <i class="bi bi-person-add"></i>
-                <input type="text" id="empNo" name="empNo" class="inputItem" placeholder="사번">
+                <input type="text" th:field="*{empNo}" class="inputItem" placeholder="사번">
             </div>
             <div class="form_item">
                 <i class="bi bi-lock"></i>
-                <input type="password" id="password" name="password" class="inputItem" placeholder="비밀번호">
+                <input type="password" th:field="*{password}" class="inputItem" placeholder="비밀번호">
             </div>
             <div class="form_item">
                 <i class="bi bi-person"></i>
-                <input type="text" id="userName" name="userName" class="inputItem" placeholder="이름">
+                <input type="text" th:field="*{userName}" class="inputItem" placeholder="이름">
             </div>
             <div class="form_item">
                 <i class="bi bi-envelope"></i>
-                <input type="text" id="email" name="email" class="inputItem" placeholder="이메일 주소">
+                <input type="text" th:field="*{email}" class="inputItem" placeholder="이메일 주소">
             </div>
         </div>
 
