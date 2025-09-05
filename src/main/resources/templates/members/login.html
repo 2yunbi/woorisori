@@ -10,18 +10,18 @@
 </head>
 <section layout:fragment="content">
     <div class="container inputForm">
-        <form action="/members/login" method="post">
+        <form th:action="@{/members/login}" method="post" th:object="${form}">
             <div class="form_group">
                 <div class="form_item">
                     <i class="bi bi-person-add"></i>
-                    <input type="text" id="empNo" name="empNo" class="inputItem" placeholder="사번">
+                    <input type="text" th:field="*{empNo}" class="inputItem" placeholder="사번">
                 </div>
                 <div class="form_item">
                     <i class="bi bi-lock"></i>
-                    <input type="password" id="password" name="password" class="inputItem" placeholder="비밀번호">
+                    <input type="password" th:field="*{password}" class="inputItem" placeholder="비밀번호">
                 </div>
             </div>
-
+            <input type="text" th:value="${result}">
             <th:block th:if="${result} != null">
                 <div class="alert-block msg">사번 또는 비밀번호가 잘못 되었습니다. 사번과 비밀번호를 정확히 입력해 주세요.</div>
             </th:block>

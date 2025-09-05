@@ -3,6 +3,9 @@ package com.woorisori.service;
 import com.woorisori.domain.member.Member;
 import com.woorisori.repository.MemberRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,16 +15,12 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
-        this.memberRepository = memberRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private static final Logger log = LoggerFactory.getLogger(MemberService.class);
 
     /**
      * 회원가입
@@ -29,8 +28,7 @@ public class MemberService {
      * @param member
      * @return getId()
      */
-    @Transactional
-    public Long join(Member member) {
+    @Transactional public Long join(Member member) {
         validateDuplicateMember(member);
 
         member.setPassword(passwordEncoder.encode(member.getPassword()));
@@ -60,8 +58,10 @@ public class MemberService {
     }
 
     public Member login(String inputEmpNo, String inputPassword) {
+        log.debug("로그인시도", inputEmpNo);
         return memberRepository.findByEmpNo(inputEmpNo)
-                .filter(member -> member.getPassword().equals(inputPassword))
+                .filter(member -> member.getPassword() != null &&
+                        passwordEncoder.matches(inputPassword, member.getPassword()))
                 .orElse(null);
     }
 }

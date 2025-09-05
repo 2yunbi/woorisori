@@ -1,6 +1,7 @@
 package com.woorisori.controller;
 
 import com.woorisori.domain.member.Member;
+import com.woorisori.dto.LoginMember;
 import com.woorisori.dto.MemberDto;
 import com.woorisori.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,13 +52,20 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm(Model model) {
+        model.addAttribute("form", new MemberDto.LoginRequest());
         return "members/login";
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String empNo, @RequestParam String password, Model model, HttpServletRequest request) {
-        Member member = memberService.login(empNo, password);
+    public String login(@Valid @ModelAttribute("form") MemberDto.LoginRequest form, BindingResult bindingResult,
+                        Model model, HttpServletRequest request) {
+
+        if (bindingResult.hasErrors()) {
+            return "members/createMemberForm";
+        }
+
+        Member member = memberService.login(form.getEmpNo(), form.getPassword());
 
         // 1. 로그인 검증
         if (member == null) {
@@ -69,7 +77,7 @@ public class MemberController {
         HttpSession session = request.getSession();
 
         // 3. 세션 값 저장
-        session.setAttribute("loginMember", member);
+        session.setAttribute("loginMember", new LoginMember(member.getId(), member.getEmpNo(), member.getUserName(), member.getRole(), member.getIsUse()));
 
         return "redirect:/";
 

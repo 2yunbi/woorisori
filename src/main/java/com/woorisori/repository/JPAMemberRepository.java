@@ -28,7 +28,7 @@ public class JPAMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findByEmpNo(String loginId) {
-        List<Member> result = em.createQuery("select m from Member m where empNo = :empNo", Member.class).setParameter("empNo", loginId).getResultList();
+        List<Member> result = em.createQuery("select m from Member m where m.empNo = :empNo", Member.class).setParameter("empNo", loginId).getResultList();
         return result.stream().findAny();
     }
 
