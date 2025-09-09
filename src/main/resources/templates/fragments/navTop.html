@@ -6,7 +6,7 @@
 </nav>
 <nav class="navTop bg-white"  th:fragment="navTop" th:if="${session.loginMember != null}">
     <div class="navTopMenu container d-flex py-2">
-        <span><th:blank th:text="${session.loginMember.userName}"></th:blank>님 반갑습니다!</span>
+        <span th:text="${session.loginMember.userName} + '님 반갑습니다!'"></span>
         <form th:action="@{/members/logout}" method="post" style="display: inline">
             <button type="submit" class="text-black mx-3 text-decoration-none" style="background:none;border:none;padding:0;cursor:pointer;">
                 로그아웃

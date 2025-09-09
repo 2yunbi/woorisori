@@ -4,6 +4,7 @@ import com.woorisori.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,26 +31,11 @@ public class SecurityConfig {
                         .requestMatchers("/", "/members/**", "/fragments/**", "/api/checkEmpNo", "/css/**", "/js/**", "/img/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(login -> login
-                        .loginPage("/members/login").permitAll()
-                        .loginProcessingUrl("/members/login")
-                        .usernameParameter("empNo")
-                        .passwordParameter("password")
-                        .defaultSuccessUrl("/",true)
-                )
+                .formLogin(Customizer.withDefaults())
                 .logout(l -> l.logoutUrl("/members/logout").logoutSuccessUrl("/"));
+
         return http.build();
 
     }
-
-    @Bean
-    UserDetailsService userDetailsService() {
-        return username -> memberRepository.findByEmpNo(username)
-                .map(m -> User.withUsername(m.getEmpNo())
-                        .password(m.getPassword())
-                        .build())
-                .orElseThrow(()->new UsernameNotFoundException("없는 사용자: " + username));
-    }
-
 
 }
