@@ -1,4 +1,4 @@
-package com.woorisori.dto;
+package com.woorisori.member.dto;
 
 import lombok.Value;
 

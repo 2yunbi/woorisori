@@ -1,9 +1,8 @@
-package com.woorisori.controller;
+package com.woorisori.member.controller;
 
-import com.woorisori.domain.member.Member;
-import com.woorisori.dto.LoginMember;
-import com.woorisori.dto.MemberDto;
-import com.woorisori.service.MemberService;
+import com.woorisori.member.domain.member.Member;
+import com.woorisori.member.dto.MemberDto;
+import com.woorisori.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -14,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -36,51 +34,20 @@ public class MemberController {
     }
 
     @PostMapping("/new")
-    public String create(@Valid @ModelAttribute("form") MemberDto.SignUpRequest form, BindingResult bindingResult) {
+    public String create(@Valid @ModelAttribute("form") MemberDto.SignUpRequest form, Model model, BindingResult bindingResult) {
+
         if (bindingResult.hasErrors()) {
             return "members/createMemberForm";
         }
+            memberService.join(form);
+            return "redirect:/";
 
-        Member member = new Member();
-        member.setEmpNo(form.getEmpNo());
-        member.setPassword(form.getPassword());
-        member.setUserName(form.getUserName());
-        member.setEmail(form.getEmail());
-
-        memberService.join(member);
-        return "redirect:/";
     }
 
     @GetMapping("/login")
     public String loginForm(Model model) {
         model.addAttribute("form", new MemberDto.LoginRequest());
         return "members/login";
-    }
-
-    @PostMapping("/login")
-    public String login(@Valid @ModelAttribute("form") MemberDto.LoginRequest form, BindingResult bindingResult,
-                        Model model, HttpServletRequest request) {
-
-        if (bindingResult.hasErrors()) {
-            return "members/createMemberForm";
-        }
-
-        Member member = memberService.login(form.getEmpNo(), form.getPassword());
-
-        // 1. 로그인 검증
-        if (member == null) {
-            model.addAttribute("result", "no");
-            return "members/login";
-        }
-
-        // 2. 세션 값 생성
-        HttpSession session = request.getSession();
-
-        // 3. 세션 값 저장
-        session.setAttribute("loginMember", new LoginMember(member.getId(), member.getEmpNo(), member.getUserName(), member.getRole(), member.getIsUse()));
-
-        return "redirect:/";
-
     }
 
     @PostMapping("/logout")

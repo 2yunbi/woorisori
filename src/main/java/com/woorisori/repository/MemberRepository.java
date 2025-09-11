@@ -1,6 +1,6 @@
 package com.woorisori.repository;
 
-import com.woorisori.domain.member.Member;
+import com.woorisori.member.domain.member.Member;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.woorisori.domain.member;
+package com.woorisori.member.domain.member;
 
 public enum MemberRole {
     USER,

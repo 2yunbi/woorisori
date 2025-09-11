@@ -2,7 +2,6 @@ package com.woorisori.config;
 
 import com.woorisori.repository.JPAMemberRepository;
 import com.woorisori.repository.MemberRepository;
-import com.woorisori.service.MemberService;
 import jakarta.persistence.EntityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

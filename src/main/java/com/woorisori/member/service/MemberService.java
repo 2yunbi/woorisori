@@ -1,18 +1,17 @@
-package com.woorisori.service;
+package com.woorisori.member.service;
 
-import com.woorisori.domain.member.Member;
+import com.woorisori.member.domain.member.Member;
+import com.woorisori.member.dto.MemberDto;
 import com.woorisori.repository.MemberRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,23 +24,25 @@ public class MemberService {
     /**
      * 회원가입
      *
-     * @param member
+     * @param form
      * @return getId()
      */
-    @Transactional public Long join(Member member) {
-        validateDuplicateMember(member);
-
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
+    @Transactional public Long join(MemberDto.SignUpRequest form) {
+        Member member = new Member();
+        member.setEmpNo(form.getEmpNo());
+        member.setUserName(form.getUserName());
+        member.setPassword(passwordEncoder.encode(form.getPassword()));
+        member.setEmail(form.getEmail());
         member.setRole("USER");
         memberRepository.save(member);
         return member.getId();
     }
 
+
     private void validateDuplicateMember(Member member) {
-        memberRepository.findByEmpNo(member.getEmpNo())
-                .ifPresent(m -> {
-                    throw new IllegalStateException("이미 존재하는 회원입니다.");
-                });
+        memberRepository.findByEmpNo(member.getEmpNo()).ifPresent(m -> {
+            throw new IllegalStateException(" 존재하는 사번입니다.");
+        });
     }
 
     /**

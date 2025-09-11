@@ -15,6 +15,9 @@
             <div class="form_item">
                 <i class="bi bi-person-add"></i>
                 <input type="text" th:field="*{empNo}" class="inputItem" placeholder="사번">
+                <div th:if="${#fields.hasErrors('empNo')}" class="error-msg">
+                    <p th:errors="*{empNo}"></p>
+                </div>
             </div>
             <div class="form_item">
                 <i class="bi bi-lock"></i>
@@ -41,6 +44,9 @@
 </div> <!--container-->
 </section>
 <div layout:fragment="script">
+    <script th:if="${errorMessage != null}">
+        alert('[[${errorMessage}]]');
+    </script>
     <script src="/js/createMemberForm.js"></script>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

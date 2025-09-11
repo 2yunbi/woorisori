@@ -1,6 +1,6 @@
 package com.woorisori.repository;
 
-import com.woorisori.domain.member.Member;
+import com.woorisori.member.domain.member.Member;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;

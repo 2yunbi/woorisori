@@ -1,4 +1,4 @@
-package com.woorisori.domain.member;
+package com.woorisori.member.domain.member;
 
 import jakarta.persistence.*;
 import org.springframework.cglib.core.Local;

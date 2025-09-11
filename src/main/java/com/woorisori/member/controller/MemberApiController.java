@@ -1,7 +1,6 @@
-package com.woorisori.controller;
+package com.woorisori.member.controller;
 
-import com.woorisori.service.MemberService;
-import org.springframework.ui.Model;
+import com.woorisori.member.service.MemberService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -1,12 +1,13 @@
-<nav class="navTop bg-white"  th:fragment="navTop" th:if="${session.loginMember == null}">
+<div xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<nav class="navTop bg-white"  th:fragment="navTop" sec:authorize="isAnonymous()">
     <div class="navTopMenu container d-flex py-2">
         <a class="text-black mx-3 text-decoration-none" th:href="@{/members/new}">회원가입</a>
         <a class="text-black mx-3 text-decoration-none" th:href="@{/members/login}">로그인</a>
     </div>
 </nav>
-<nav class="navTop bg-white"  th:fragment="navTop" th:if="${session.loginMember != null}">
+<nav class="navTop bg-white"  th:fragment="navTop" sec:authorize="isAuthenticated()">
     <div class="navTopMenu container d-flex py-2">
-        <span th:text="${session.loginMember.userName} + '님 반갑습니다!'"></span>
+        <span sec:authentication="principal.userName"></span>님 반갑습니다!
         <form id="logoutForm" th:action="@{/members/logout}" method="post" style="display: inline">
             <button type="button" class="text-black mx-3 text-decoration-none" onclick="confirmLogout();" style="background:none;border:none;padding:0;cursor:pointer;">
                 로그아웃
@@ -14,3 +15,4 @@
         </form>
     </div>
 </nav>
+</div>
