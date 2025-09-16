@@ -97,3 +97,9 @@ button[type="submit"]:hover {
 .modal-backdrop {
     display: none !important;
 }
+
+/* Message */
+.loginErrorMes {
+    color: red;
+    text-align: center;
+}
