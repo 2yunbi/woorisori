@@ -27,7 +27,7 @@ input[type="password"] {
     display: flex;
     justify-content: center;   /* 가로 가운데 */
     align-items: center;       /* 세로 가운데 */
-    /*min-height: 80vh;*/          /* 화면 높이의 80% 차지하게 해서 가운데 정렬 유도 */
+
 }
 
 .form_group {
@@ -70,6 +70,10 @@ input[type="password"] {
     width: 85%;
 }
 
+.input-error {
+    background-color: #ffe6e6;
+}
+
 .alert-block {
     padding: 0 10px 0 45px;
     color: red;
@@ -96,6 +100,11 @@ button[type="submit"]:hover {
 
 .modal-backdrop {
     display: none !important;
+}
+
+.emailDuplicate {
+    width: 80%;
+    height: 30%;
 }
 
 /* Message */

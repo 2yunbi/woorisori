@@ -1,10 +1,8 @@
 package com.woorisori.member.service;
 
 import com.woorisori.member.domain.member.Member;
-import com.woorisori.member.dto.MemberDto;
 import com.woorisori.repository.MemberRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,23 +25,33 @@ public class MemberService {
      * @param form
      * @return getId()
      */
-    @Transactional public Long join(MemberDto.SignUpRequest form) {
+    @Transactional public Long join(Member form) {
+        validateDuplicateMember(form);
+
         Member member = new Member();
         member.setEmpNo(form.getEmpNo());
         member.setUserName(form.getUserName());
         member.setPassword(passwordEncoder.encode(form.getPassword()));
         member.setEmail(form.getEmail());
         member.setRole("USER");
+
         memberRepository.save(member);
+
         return member.getId();
     }
 
 
     private void validateDuplicateMember(Member member) {
-        memberRepository.findByEmpNo(member.getEmpNo()).ifPresent(m -> {
-            throw new IllegalStateException(" 존재하는 사번입니다.");
-        });
+        memberRepository.findByEmpNo(member.getEmpNo())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 사번입니다.");
+                });
+        memberRepository.findByEmail(member.getEmail())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 이메일 주소입니다.");
+                });
     }
+
 
     /**
      * 전체 회원 조회
@@ -57,9 +65,11 @@ public class MemberService {
     public boolean isEmpNoExists(String empNo) {
         return memberRepository.findByEmpNo(empNo).isPresent();
     }
+    public boolean isEmailExists(String email) {
+        return memberRepository.findByEmail(email).isPresent();
+    }
 
     public Member login(String inputEmpNo, String inputPassword) {
-        log.debug("로그인시도", inputEmpNo);
         return memberRepository.findByEmpNo(inputEmpNo)
                 .filter(member -> member.getPassword() != null &&
                         passwordEncoder.matches(inputPassword, member.getPassword()))

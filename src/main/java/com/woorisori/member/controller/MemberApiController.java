@@ -24,4 +24,11 @@ public class MemberApiController {
         return Collections.singletonMap("exists", exists);
     }
 
+    @GetMapping("/checkEmail")
+    public Map<String, Boolean> checkPassword(@RequestParam String email) {
+        boolean exists = memberService.isEmailExists(email);
+        return Collections.singletonMap("exists", exists);
+
+    }
+
 }

@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,9 +40,18 @@ public class MemberController {
         if (bindingResult.hasErrors()) {
             return "members/createMemberForm";
         }
-            memberService.join(form);
-            return "redirect:/";
 
+        try {
+            Member member = new Member();
+            member.setEmpNo(form.getEmpNo());
+            member.setPassword(form.getPassword());
+            member.setUserName(form.getUserName());
+            member.setEmail(form.getEmail());
+            memberService.join(member);
+        }catch (IllegalStateException e) {
+            return "members/createMemberForm";
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/login")

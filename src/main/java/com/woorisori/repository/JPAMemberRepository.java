@@ -33,6 +33,12 @@ public class JPAMemberRepository implements MemberRepository {
     }
 
     @Override
+    public Optional<Member> findByEmail(String email) {
+        List<Member> result = em.createQuery("select m from Member m where m.email = :email", Member.class).setParameter("email", email).getResultList();
+        return result.stream().findAny();
+    }
+
+    @Override
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class).getResultList();
     }
