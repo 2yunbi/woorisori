@@ -17,11 +17,6 @@ document.addEventListener("DOMContentLoaded", function (){
                 errorMsg.innerHTML = '<i class="bi bi-exclamation-diamond"></i> 사번이 중복입니다.';
                 inputEmpNo.classList.add("input-error");
                 isSignUpCheck = true;
-            } else if (!empNo) {
-                errorMsg.style.display = "block";
-                errorMsg.innerHTML = '<i class="bi bi-exclamation-diamond"></i> 사번은 필수 입력입니다.';
-                inputEmpNo.classList.add("input-error");
-                isSignUpCheck = false;
             } else {
                 errorMsg.style.display = "none";
                 inputEmpNo.classList.remove("input-error");
@@ -41,9 +36,7 @@ document.addEventListener("DOMContentLoaded", function (){
         const password = document.getElementById("password").value.trim();
         const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}\[\]:;"'<>,.?/]).{8,}$/;
 
-        if(!password) {
-            isSignUpCheck = false;
-        } else if(!pwRegex.test(password)) {
+        if(!pwRegex.test(password)) {
             errorMsg.style.display = "block";
             errorMsg.innerHTML = '<i class="bi bi-exclamation-diamond"></i> 비밀번호는 8자리 이상, 영문/숫자/특수문자를 모두 포함해야 합니다.';
             inputPassword.classList.add("input-error");
@@ -55,26 +48,11 @@ document.addEventListener("DOMContentLoaded", function (){
         }
     });
 
-    //이름 입력 확인
-    const inputUserName = document.getElementById("userName");
-    inputUserName.addEventListener("blur", function () {
-       const userName = inputUserName.value.trim();
-       if(!userName) {
-           errorMsg.style.display = "block";
-           errorMsg.innerHTML = '<i class="bi bi-exclamation-diamond"></i> 이름을 입력하세요.';
-           inputUserName.classList.add("input-error");
-           isSignUpCheck = true;
-       } else {
-           errorMsg.style.display = "none";
-           inputUserName.classList.remove("input-error");
-           isSignUpCheck = false;
-       }
-    });
-
     // 이메일 중복체크 및 null 체크
     const inputEmail = document.getElementById("email");
     inputEmail.addEventListener("blur", function () {
         const email = inputEmail.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         fetch(`/api/checkEmail?email=${encodeURIComponent(email)}`)
             .then(response => response.json())
@@ -84,11 +62,11 @@ document.addEventListener("DOMContentLoaded", function (){
                     errorMsg.innerHTML = '<i class="bi bi-exclamation-diamond"></i> 이메일이 중복입니다.';
                     inputEmail.classList.add("input-error");
                     isSignUpCheck = true;
-                } else if(!email) {
+                } else if (!emailRegex.test(email)) {
                     errorMsg.style.display = "block";
-                    errorMsg.innerHTML = '<i class="bi bi-exclamation-diamond"></i> 이메일을 입력하세요.';
+                    errorMsg.innerHTML = '<i class="bi bi-exclamation-diamond"></i> 이메일 형식이 올바르지 않습니다.';
                     inputEmail.classList.add("input-error");
-                    isSignUpCheck = "false";
+                    isSignUpCheck = true;
                 } else {
                     errorMsg.style.display = "none";
                     inputEmail.classList.remove("input-error");
@@ -108,14 +86,28 @@ document.getElementById("signUpForm").addEventListener("submit", function (e) {
 
     const empNo = document.getElementById("empNo").value.trim();
     const password = document.getElementById("password").value.trim();
-    const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}\[\]:;"'<>,.?/]).{8,}$/;
 
     const userName = document.getElementById("userName").value.trim();
     const email = document.getElementById("email").value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-
-    const errorMsg = document.getElementById("errorMsg");
+    // 공란 체크
+    if(!empNo) {
+        isSignUpCheck = true;
+        alert('사번을 입력하세요!');
+    } else if (!password) {
+        isSignUpCheck = true;
+        alert('비밀번호를 입력하세요!');
+    } else if (!userName) {
+        isSignUpCheck = true;
+        alert('이름을 입력하세요!');
+    } else if (!email) {
+        isSignUpCheck = true;
+        alert('이메일 주소를 입력하세요!')
+    } else if (!emailRegex.test(email)) {
+        isSignUpCheck = true;
+        alert('이메일 형식이 올바르지 않습니다!')
+    }
 
     if (isSignUpCheck) {
         e.preventDefault();

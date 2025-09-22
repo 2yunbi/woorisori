@@ -34,6 +34,7 @@ public class MemberService {
         member.setPassword(passwordEncoder.encode(form.getPassword()));
         member.setEmail(form.getEmail());
         member.setRole("USER");
+        member.setIsUse("Y");
 
         memberRepository.save(member);
 

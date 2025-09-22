@@ -47,6 +47,7 @@ public class Member {
         if (this.modifyDate == null) {
             this.modifyDate = LocalDateTime.now();
         }
+
     }
 
     public Long getId() {
