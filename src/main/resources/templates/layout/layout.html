@@ -18,14 +18,16 @@
 <!-- 헤더 삽입 -->
 <div th:replace="fragments/header :: header"></div>
 
-<!-- 네비게이션 삽입 -->
-<div th:replace="fragments/nav :: nav"></div>
-
 <!-- 본문 자리 -->
-<main class="container py-5" layout:fragment="content">
-    <p>본문 기본 내용입니다.</p>
-</main>
-<div layout:fragment="script"></div>
+<div class="layout">
+    <!-- 세로 메뉴바 -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <!-- 본문 영역 -->
+    <main class="content">
+        <div th:fragment="content"></div>
+    </main>
+</div>
 
 <!-- 푸터 삽입 -->
 <div th:replace="fragments/footer :: footer"></div>

@@ -1,7 +1,25 @@
-.centered-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px; /* 모바일 대응용 여백 */
+
+/* Layout 전체 CSS */
+
+/*.centered-container {*/
+/*    width: 1800px;*/
+/*    margin: 0 auto;*/
+/*    padding: 0 20px; !* 모바일 대응용 여백 *!*/
+/*}*/
+
+/* navTop (맨 위 고정) */
+.nav-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;           /* navTop 높이 */
+    background: #0d6efd;
+    color: white;
+    z-index: 1100;          /* header 위에 보이게 */
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
 }
 
 .navTopMenu {
@@ -9,11 +27,82 @@
     justify-content: right;
 }
 
-.banner-img {
+.header {
+    position: fixed;
+    top: 50px;          /* navTop 높이만큼 띄우기 */
+    left: 0;
     width: 100%;
-    display: block;
-    margin: 0 auto;
+    height: 300px;      /* 🔥 200px → 300px */
+    overflow: hidden;   /* 혹시라도 내용 넘치면 잘라냄 */
+    background: #fff;
+    z-index: 1000;
+    display: flex;
+    justify-content: center; /* 👉 가로 가운데 */
+    align-items: center;     /* 👉 세로 가운데 */
 }
+
+.banner-img {
+    display: block;
+    width: auto;   /* 부모 100%에 맞추지 않음 */
+    height: 300px;      /* 세로 자동 → 원본 비율(300px) 유지 */
+    object-fit: contain; /* 이미지 전체 보장 */
+}
+
+.sidebar {
+    position: fixed;
+    top: 300px;             /* navTop + header 높이만큼 */
+    left: 20px;
+    width: 220px;
+    bottom: 50px;
+    margin-top: 50px;
+    overflow-y: auto;
+    padding-top: 20px;
+}
+
+.menu_wrap li {
+    list-style: none;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.menu_wrap li:hover {
+    background-color: pink;
+}
+
+.menu_wrap li a {
+    color: #333333;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+}
+
+.menu_wrap li a i {
+    margin-right: 10px;
+}
+
+.content {
+    height: 1000px;
+    margin-top: 130px;      /* navTop + header 높이 */
+    margin-left: 220px;     /* sidebar 폭 */
+    margin-bottom: 40px;    /* footer 높이 */
+    padding: 20px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #34495e;
+    color: #ecf0f1;
+    text-align: center;
+    line-height: 40px;
+    z-index: 1000;
+}
+
+/* Layout 전체 CSS 끝 ******************/
 
 input[type="text"] {
     border: none;
