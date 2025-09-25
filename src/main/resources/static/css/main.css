@@ -83,7 +83,7 @@
 
 .content {
     height: 1000px;
-    margin-top: 130px;      /* navTop + header 높이 */
+    margin-top: 500px;      /* navTop + header 높이 */
     margin-left: 220px;     /* sidebar 폭 */
     margin-bottom: 40px;    /* footer 높이 */
     padding: 20px;

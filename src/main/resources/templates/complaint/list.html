@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>고충처리</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<section layout:fragment="content">
+    <div class="container inputForm">
+        <table>
+            <tr>
+                <th>테스트</th>
+            </tr>
+            <tr th:each="complaint : ${complaintList}">
+                <td th:text="${complaint.subject}"></td>
+                <td th:text="${complaint.id}"></td>
+            </tr>
+        </table>
+    </div> <!--container-->
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</html>

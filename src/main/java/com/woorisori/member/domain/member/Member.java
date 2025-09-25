@@ -22,7 +22,7 @@ public class Member {
     private String email;
     private String role;
 
-    private String  isUse;
+    private String isUse;
 
     private LocalDateTime joinDate;
 

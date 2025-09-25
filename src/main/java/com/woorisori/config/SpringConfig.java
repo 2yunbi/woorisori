@@ -1,5 +1,7 @@
 package com.woorisori.config;
 
+import com.woorisori.complaint.repository.ComplaintRepository;
+import com.woorisori.complaint.repository.JPAComplaintRepository;
 import com.woorisori.repository.JPAMemberRepository;
 import com.woorisori.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
@@ -18,5 +20,10 @@ public class SpringConfig {
     public MemberRepository memberRepository() {
         //return new MemoryMemberRepository();
         return new JPAMemberRepository(em);
+    }
+
+    @Bean
+    public ComplaintRepository complaintRepository() {
+        return new JPAComplaintRepository(em);
     }
 }

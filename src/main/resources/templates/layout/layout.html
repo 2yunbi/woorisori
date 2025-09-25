@@ -23,12 +23,10 @@
     <!-- 세로 메뉴바 -->
     <div th:replace="fragments/sidebar :: sidebar"></div>
 
-    <!-- 본문 영역 -->
-    <main class="content">
-        <div th:fragment="content"></div>
-    </main>
 </div>
-
+    <!-- 본문 영역 -->
+    <main class="content" layout:fragment="content">
+    </main>
 <!-- 푸터 삽입 -->
 <div th:replace="fragments/footer :: footer"></div>
 
