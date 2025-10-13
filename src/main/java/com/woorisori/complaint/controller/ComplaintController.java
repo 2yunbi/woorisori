@@ -1,8 +1,10 @@
 package com.woorisori.complaint.controller;
 
-import com.woorisori.complaint.domain.Complaint;
+import com.woorisori.complaint.dto.ComplaintWithMember;
 import com.woorisori.complaint.service.ComplaintService;
+import com.woorisori.config.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +20,11 @@ public class ComplaintController {
     private final ComplaintService complaintService;
 
     @GetMapping("/list")
-    public String list(Model model) {
-        List<Complaint> complaintList = complaintService.list();
-        model.addAttribute("complaintList", complaintList);
+    public String findById(@AuthenticationPrincipal CustomUserDetails memberDetails, Model model) {
+        Long loginId = memberDetails.getId();
+        List<ComplaintWithMember> list = complaintService.findById(loginId);
+        model.addAttribute("list", list);
+
         return "/complaint/list";
     }
 }

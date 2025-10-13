@@ -28,10 +28,6 @@ public class Complaint {
     @Column(name = "delete_date")
     private LocalDateTime deleteDate;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private Member member_id;
-
 
     public long getId() {
         return id;

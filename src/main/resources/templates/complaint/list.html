@@ -15,9 +15,10 @@
             <tr>
                 <th>테스트</th>
             </tr>
-            <tr th:each="complaint : ${complaintList}">
-                <td th:text="${complaint.subject}"></td>
-                <td th:text="${complaint.id}"></td>
+            <tr th:each="list : ${list}">
+                <td th:text="${list.subject}"></td>
+                <td th:text="${list.userName}"></td>
+                <td th:text="${list.createDate}"></td>
             </tr>
         </table>
     </div> <!--container-->

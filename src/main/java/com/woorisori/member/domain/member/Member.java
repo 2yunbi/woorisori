@@ -18,6 +18,7 @@ public class Member {
     @Column(name="password", nullable = false, length = 255)
     private String password;
 
+    @Column(name="user_name")
     private String userName;
     private String email;
     private String role;

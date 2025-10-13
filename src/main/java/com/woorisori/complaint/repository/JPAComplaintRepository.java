@@ -1,10 +1,10 @@
 package com.woorisori.complaint.repository;
 
 import com.woorisori.complaint.domain.Complaint;
+import com.woorisori.complaint.dto.ComplaintWithMember;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
-import java.util.Optional;
 
 public class JPAComplaintRepository implements ComplaintRepository {
 
@@ -21,10 +21,11 @@ public class JPAComplaintRepository implements ComplaintRepository {
     }
 
     @Override
-    public Optional<Complaint> findById(int writerID) {
-        //List<Complaint> result = em.createQuery("select c from Complaint c where c.writerId = :writerId", Complaint.class).setParameter("writerId", writerID).getResultList();
-        List<Object[]> result = em.createQuery("select c, m from Complaint c inner join Member m", Object[].class).getResultList();
-        return result.stream().findAny();
+    public List<ComplaintWithMember> findById(long writerId) {
+
+        List<ComplaintWithMember> result = em.createQuery("select c.subject, m.userName, c.createDate from Complaint c join Member m ON c.writerId = m.id where c.writerId = :writerId", ComplaintWithMember.class).setParameter("writerId", writerId).getResultList();
+
+        return result;
     }
 
     @Override
