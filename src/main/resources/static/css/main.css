@@ -1,11 +1,5 @@
 
-/* Layout 전체 CSS */
-
-/*.centered-container {*/
-/*    width: 1800px;*/
-/*    margin: 0 auto;*/
-/*    padding: 0 20px; !* 모바일 대응용 여백 *!*/
-/*}*/
+/****************** Layout 전체 CSS ******************/
 
 /* navTop (맨 위 고정) */
 .nav-top {
@@ -27,8 +21,9 @@
     justify-content: right;
 }
 
+/* 배너 header */
 .header {
-    position: fixed;
+    position: relative;
     top: 50px;          /* navTop 높이만큼 띄우기 */
     left: 0;
     width: 100%;
@@ -48,6 +43,7 @@
     object-fit: contain; /* 이미지 전체 보장 */
 }
 
+/* sidebar 메뉴 */
 .sidebar {
     position: fixed;
     top: 300px;             /* navTop + header 높이만큼 */
@@ -81,13 +77,7 @@
     margin-right: 10px;
 }
 
-.content {
-    height: 1000px;
-    margin-top: 500px;      /* navTop + header 높이 */
-    margin-left: 220px;     /* sidebar 폭 */
-    margin-bottom: 40px;    /* footer 높이 */
-    padding: 20px;
-}
+/* footer 푸터 */
 
 .footer {
     position: fixed;
@@ -102,7 +92,19 @@
     z-index: 1000;
 }
 
-/* Layout 전체 CSS 끝 ******************/
+/* 본문 */
+
+.content {
+    height: 1000px;
+    margin-top: 200px;
+    margin-left: 220px;/* navTop + header 높이 */
+    padding: 20px;
+}
+
+
+/***************** Layout 전체 CSS 끝 ******************/
+
+/***************** 입력창 ******************/
 
 input[type="text"] {
     border: none;
@@ -116,7 +118,6 @@ input[type="password"] {
     display: flex;
     justify-content: center;   /* 가로 가운데 */
     align-items: center;       /* 세로 가운데 */
-
 }
 
 .form_group {
@@ -167,6 +168,20 @@ input[type="password"] {
     padding: 0 10px 0 45px;
     color: red;
 }
+
+/* 게시판 목록 */
+.board-list__table-wrap {
+    overflow-x:auto;
+    border:1px solid #eee;
+    border-radius:10px;
+}
+
+
+/* 페이징 */
+.paging {
+    text-align: center;
+}
+
 
 /* button */
 .form_submit {
