@@ -35,7 +35,7 @@ public class MemberController {
     }
 
     @PostMapping("/new")
-    public String create(@Valid @ModelAttribute("form") MemberDto.SignUpRequest form, Model model, BindingResult bindingResult) {
+    public String create(@Valid @ModelAttribute("form") MemberDto.SignUpRequest form, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             return "members/createMemberForm";
