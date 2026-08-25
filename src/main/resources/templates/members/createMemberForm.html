@@ -15,7 +15,6 @@
             <div class="form_item">
                 <i class="bi bi-person-add"></i>
                 <input type="text" th:field="*{empNo}" class="inputItem" placeholder="사번">
-                    <p th:errors="*{empNo}"></p>
             </div>
             <div class="form_item">
                 <i class="bi bi-lock"></i>
@@ -31,7 +30,9 @@
             </div>
         </div>
 
-        <div class="alert-block msg" id="errorMsg" style="display: none;">
+        <div class="alert-block msg" id="errorMsg" th:style="${(#fields.hasErrors('*') or error != null) ? 'display:block' : 'display:none'}">            <i class="bi bi-exclamation-diamond"></i>
+            <span th:if="${#fields.hasErrors('*')}" th:text="${#fields.errors('*')[0]}"></span>
+            <span th:unless="${#fields.hasErrors('*')}" th:text="${error}"></span>
         </div>
         <div class="form_submit">
             <button type="submit">등록</button>
