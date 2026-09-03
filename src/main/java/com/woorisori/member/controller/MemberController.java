@@ -49,6 +49,7 @@ public class MemberController {
             member.setEmail(form.getEmail());
             memberService.join(member);
         }catch (IllegalStateException e) {
+            model.addAttribute("error", e.getMessage());
             return "members/createMemberForm";
         }
         return "redirect:/";
