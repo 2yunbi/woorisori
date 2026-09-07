@@ -13,5 +13,5 @@ public class ComplaintService {
 
     private final ComplaintRepository complaintRepository;
 
-    public List<ComplaintWithMember> findById(long writerId) { return complaintRepository.findById(writerId); }
+    public List<ComplaintWithMember> findMyComplaints(long writerId) { return complaintRepository.findMyComplaints(writerId); }
 }
