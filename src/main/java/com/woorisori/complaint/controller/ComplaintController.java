@@ -22,7 +22,7 @@ public class ComplaintController {
     @GetMapping("/list")
     public String findById(@AuthenticationPrincipal CustomUserDetails memberDetails, Model model) {
         Long loginId = memberDetails.getId();
-        List<ComplaintWithMember> list = complaintService.findById(loginId);
+        List<ComplaintWithMember> list = complaintService.findMyComplaints(loginId);
         model.addAttribute("list", list);
 
         return "/complaint/list";
