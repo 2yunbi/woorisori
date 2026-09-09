@@ -13,9 +13,15 @@
     <div class="container inputForm">
         <table>
             <tr>
-                <th>테스트</th>
+                <th>No</th>
+                <th>상태</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일자</th>
             </tr>
             <tr th:each="list : ${list}">
+                <td>1</td>
+                <td th:text="${list.status}"></td>
                 <td th:text="${list.subject}"></td>
                 <td th:text="${list.userName}"></td>
                 <td th:text="${list.createDate}"></td>

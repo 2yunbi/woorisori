@@ -42,12 +42,7 @@ public class MemberController {
         }
 
         try {
-            Member member = new Member();
-            member.setEmpNo(form.getEmpNo());
-            member.setPassword(form.getPassword());
-            member.setUserName(form.getUserName());
-            member.setEmail(form.getEmail());
-            memberService.join(member);
+            memberService.join(form);
         }catch (IllegalStateException e) {
             model.addAttribute("error", e.getMessage());
             return "members/createMemberForm";

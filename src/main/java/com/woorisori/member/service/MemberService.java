@@ -1,8 +1,10 @@
 package com.woorisori.member.service;
 
 import com.woorisori.member.domain.member.Member;
+import com.woorisori.member.dto.MemberDto;
 import com.woorisori.repository.MemberRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +27,7 @@ public class MemberService {
      * @param form
      * @return getId()
      */
-    @Transactional public Long join(Member form) {
+    @Transactional public Long join(MemberDto.SignUpRequest form) {
         validateDuplicateMember(form);
 
         Member member = new Member();
@@ -42,7 +44,7 @@ public class MemberService {
     }
 
 
-    private void validateDuplicateMember(Member member) {
+    private void validateDuplicateMember(MemberDto.SignUpRequest member) {
         memberRepository.findByEmpNo(member.getEmpNo())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 사번입니다.");
