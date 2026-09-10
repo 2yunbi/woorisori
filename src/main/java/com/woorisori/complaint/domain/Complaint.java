@@ -9,16 +9,14 @@ import java.time.LocalDateTime;
 @Table(name = "complaint")
 public class Complaint {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "writer_id")
-    private long writerId;
+    @ManyToOne
+    @JoinColumn(name = "writer_id", insertable = false, updatable = false)
+    private Member writerId;
     private String subject;
     private String content;
-
-    @Column(name = "anonymous_pw")
-    private String anonymousPw;
     private String status;
 
     @Column(name = "create_date")
@@ -37,11 +35,11 @@ public class Complaint {
         this.id = id;
     }
 
-    public long getWriterId() {
+    public Member getWriterId() {
         return writerId;
     }
 
-    public void setWriterId(long writerId) {
+    public void setWriterId(Member writerId) {
         this.writerId = writerId;
     }
 
@@ -59,14 +57,6 @@ public class Complaint {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getAnonymousPw() {
-        return anonymousPw;
-    }
-
-    public void setAnonymousPw(String anonymousPw) {
-        this.anonymousPw = anonymousPw;
     }
 
     public String getStatus() {
