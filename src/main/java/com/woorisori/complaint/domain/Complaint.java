@@ -12,9 +12,14 @@ public class Complaint {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    //작성자 값 세팅
+    @Column(name="writer_id")
+    private long writerId;
+
+    //작성자 정보 불러오기
     @ManyToOne
     @JoinColumn(name = "writer_id", insertable = false, updatable = false)
-    private Member writerId;
+    private Member writer;
     private String subject;
     private String content;
     private String status;
@@ -35,12 +40,19 @@ public class Complaint {
         this.id = id;
     }
 
-    public Member getWriterId() {
+    public long getWriterId() {
         return writerId;
     }
 
-    public void setWriterId(Member writerId) {
+    public void setWriterId(long writerId) {
         this.writerId = writerId;
+    }
+
+    public Member getWriter() {
+        return writer;
+    }
+    public void setWriter(Member writer) {
+        this.writer = writer;
     }
 
     public String getSubject() {
