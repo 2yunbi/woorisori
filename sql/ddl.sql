@@ -21,17 +21,15 @@ create table member
 )
 -- 고충처리 게시판 테이블
 drop table if exists complaint cascade;
-create table complaint (
-   id bigint auto_increment primary key,
-   writer_id bigint not null,
-   subject varchar(100) not null,
-   content text not null,
-   status varchar(100) not null,
-   create_date datetime not null default CURRENT_TIMESTAMP,
-   modify_date datetime not null default CURRENT_TIMESTAMP on update current_timestamp,
-   delete_date datetime null,
-
-   constraint fk_writer_id foreign key (writer_id)
-       references member(id)
-       on delete restrict
+create table complaint
+(
+    id bigint auto_increment primary key,
+    writer_id bigint not null,
+    subject varchar(200) not null,
+    content text not null,
+    status varchar(20) not null default 'RECEIVED',
+    create_date datetime default CURRENT_TIMESTAMP,
+    modify_date datetime default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    delete_date datetime,
+    constraint fk_complaint_writer foreign key (writer_id) references member(id)
 );
