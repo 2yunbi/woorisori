@@ -22,7 +22,9 @@ public class Complaint {
     private Member writer;
     private String subject;
     private String content;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private ComplaintStatus status;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;
@@ -71,11 +73,11 @@ public class Complaint {
         this.content = content;
     }
 
-    public String getStatus() {
+    public ComplaintStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ComplaintStatus status) {
         this.status = status;
     }
 
