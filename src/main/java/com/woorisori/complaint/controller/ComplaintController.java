@@ -10,10 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,12 +40,25 @@ public class ComplaintController {
         return "/complaint/list";
     }
 
+    private static final int PAGE_SIZE = 10;
+
     @GetMapping("/list")
-    public String findById(@AuthenticationPrincipal CustomUserDetails memberDetails, Model model) {
+    public String findById(@AuthenticationPrincipal CustomUserDetails memberDetails, @RequestParam(defaultValue = "1") int page, Model model) {
         Long loginId = memberDetails.getId();
-        List<ComplaintWithMember> list = complaintService.findMyComplaints(loginId);
+        long totalCount = complaintService.countMyComplaints(loginId);
+
+        int totalPages = (int) Math.max(1,Math.ceil((double)(totalCount / PAGE_SIZE)));
+        int safePages = Math.min(Math.max(page, 1), totalPages);
+
+        List<ComplaintWithMember> list = complaintService.findPageMyComplaints(loginId, safePages, PAGE_SIZE);
+
         model.addAttribute("list", list);
+        model.addAttribute("page", safePages);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalCount", totalCount);
+        model.addAttribute("pageSize", PAGE_SIZE);
 
         return "/complaint/list";
     }
+
 }

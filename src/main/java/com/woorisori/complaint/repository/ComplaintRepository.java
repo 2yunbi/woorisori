@@ -10,6 +10,8 @@ import java.util.List;
 public interface ComplaintRepository {
 
     List<Complaint> findAll();
-    List<ComplaintWithMember> findMyComplaints(long writerID);
+    Long countByWriterId(long writerID);
+    List<ComplaintWithMember> findPageByWriterId(Long writerId, int page, int size);
     Complaint save(Complaint complaint);
+
 }

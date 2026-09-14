@@ -28,5 +28,12 @@ public class ComplaintService {
         return complaint.getId();
     }
 
-    public List<ComplaintWithMember> findMyComplaints(long writerId) { return complaintRepository.findMyComplaints(writerId); }
+    public long countMyComplaints(long writerId) {
+        return complaintRepository.countByWriterId(writerId);
+    }
+
+    public List<ComplaintWithMember> findPageMyComplaints(long writerId, int page, int size) {
+        return complaintRepository.findPageByWriterId(writerId, page, size);
+    }
+
 }
