@@ -33,6 +33,20 @@ public class Complaint {
     @Column(name = "delete_date")
     private LocalDateTime deleteDate;
 
+    @PrePersist
+    public void prePersist() {
+        if (this.createDate == null) {
+            this.createDate = LocalDateTime.now();
+        }
+
+        if (this.modifyDate == null) {
+            this.modifyDate = LocalDateTime.now();
+        }
+
+        if (this.deleteDate == null) {
+            this.deleteDate = LocalDateTime.now();
+        }
+    }
 
     public long getId() {
         return id;
