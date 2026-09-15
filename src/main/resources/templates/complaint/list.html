@@ -8,26 +8,39 @@
     <title>고충처리</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/complaint.css">
 </head>
 <section layout:fragment="content">
-    <div class="container inputForm">
-        <table>
-            <tr>
-                <th>No</th>
-                <th>상태</th>
+    <div class="board-list-header">
+        <h4>고충처리 게시판</h4>
+        <a th:href="@{/complaint/new}" class="btn btn primary">글쓰기</a>
+    </div>
+
+    <div class="board-card">
+        <table class="table table-hover align-middle">
+            <thead>
+            <tr class="table-light">
+                <th class="text-center" style="width: 70px;">번호</th>
+                <th class="text-center" style="width: 100px;">상태</th>
                 <th>제목</th>
-                <th>작성자</th>
-                <th>작성일자</th>
+                <th class="text-center" style="width: 120px;">작성자</th>
+                <th class="text-center" style="width: 160px;">등록일</th>
             </tr>
-            <tr th:each="list : ${list}">
-                <td>1</td>
-                <td th:text="${list.status}"></td>
-                <td th:text="${list.subject}"></td>
-                <td th:text="${list.userName}"></td>
-                <td th:text="${list.createDate}"></td>
+            <tr th:if="${#lists.isEmpty(list)}">
+                <td colspan="5" class="text-center text-muted py-4" >등록된 글이 없습니다.</td>
             </tr>
+            <tr th:each="complaint, start : ${list}">
+                <td class="text-center" th:text="${totalCount - (page - 1) * pageSize - start.index}"></td>
+                <td th:text="${complaint.status}"></td>
+                <td th:text="${complaint.subject}"></td>
+                <td th:text="${complaint.userName}"></td>
+                <td th:text="${#temporals.format(complaint.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
         </table>
-    </div> <!--container-->
+    </div>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </html>
