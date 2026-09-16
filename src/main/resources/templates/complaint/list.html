@@ -32,7 +32,7 @@
             <tr th:each="complaint, start : ${list}">
                 <td class="text-center" th:text="${totalCount - (page - 1) * pageSize - start.index}"></td>
                 <td th:text="${complaint.status}"></td>
-                <td th:text="${complaint.subject}"></td>
+                <th><a th:href="@{/complaint/{id}(id=${complaint.id})}" th:text="${complaint.subject}"></a></th>
                 <td th:text="${complaint.userName}"></td>
                 <td th:text="${#temporals.format(complaint.createDate, 'yyyy-MM-dd HH:mm')}"></td>
             </tr>
