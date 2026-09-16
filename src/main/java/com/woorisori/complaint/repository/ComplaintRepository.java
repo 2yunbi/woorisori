@@ -10,11 +10,12 @@ import java.util.Optional;
 @Repository
 public interface ComplaintRepository {
 
+    Complaint save(Complaint complaint);
+
     List<Complaint> findAll();
     Long countByWriterId(long writerID);
     List<ComplaintWithMember> findPageByWriterId(Long writerId, int page, int size);
 
     Optional<Complaint> findByIdAndWriterID(long id, long writerId);
-    Complaint save(Complaint complaint);
 
 }

@@ -30,7 +30,7 @@ public class JPAComplaintRepository implements ComplaintRepository {
     }
 
     public Long countByWriterId(long writerId) {
-        return em.createQuery("select count(c) from Complaint c where c.writerId = :writerId", Long.class).setParameter("writerId", writerId).getSingleResult();
+        return em.createQuery("select count(c) from Complaint c where c.writerId = :writerId and c.deleteDate is null", Long.class).setParameter("writerId", writerId).getSingleResult();
     }
 
     public List<ComplaintWithMember> findPageByWriterId(Long writerId, int page, int size) {
@@ -39,6 +39,7 @@ public class JPAComplaintRepository implements ComplaintRepository {
                                 "from Complaint c inner join Member m " +
                                     "on c.writerId = m.id " +
                                 "where c.writerId = :writerId " +
+                                    "and c.deleteDate is null " +
                                 "order by c.id desc", ComplaintWithMember.class)
                 .setParameter("writerId", writerId)
                 .setFirstResult((page - 1) * size)
@@ -53,6 +54,5 @@ public class JPAComplaintRepository implements ComplaintRepository {
                                 .getResultList();
         return list.stream().findAny();
     }
-
 
 }

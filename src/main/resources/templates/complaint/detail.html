@@ -25,6 +25,10 @@
         <div th:utext="${complaint.content}"></div>
         <div class="board-actions">
             <a th:href="@{/complaint/list}" class="btn btn-outline-secondary">목록으로</a>
+
+            <form th:if="${complaint.status.name() == 'RECEIVED'}" th:action="@{/complaint/{id}/delete(id=${complaint.id})}" method="post">
+                <button type="submit" class="btn btn-danger">삭제</button>
+            </form>
         </div>
        </div>
     </div>

@@ -1,6 +1,7 @@
 package com.woorisori.complaint.controller;
 
 import com.woorisori.complaint.domain.Complaint;
+import com.woorisori.complaint.domain.ComplaintStatus;
 import com.woorisori.complaint.dto.ComplaintDto;
 import com.woorisori.complaint.dto.ComplaintWithMember;
 import com.woorisori.complaint.service.ComplaintService;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -65,12 +67,26 @@ public class ComplaintController {
 
     @GetMapping("/{id}")
     public String complaintDetailView(@AuthenticationPrincipal CustomUserDetails memberDetails, @PathVariable Long id, Model model) {
-        long longId = memberDetails.getId();
+        long writerId = memberDetails.getId();
 
-        Complaint complaint = complaintService.complaintDetailView(id, longId);
+        Complaint complaint = complaintService.complaintDetailView(id, writerId);
         model.addAttribute("complaint", complaint);
 
         return "/complaint/detail";
+    }
+
+    @PostMapping("/{id}/delete")
+    public String delete(@AuthenticationPrincipal CustomUserDetails memberDetails, @PathVariable Long id, Model model) {
+        long writerId = memberDetails.getId();
+        Complaint complaint = complaintService.complaintDetailView(id, writerId);
+
+        if (complaint.getStatus() != ComplaintStatus.RECEIVED) {
+            throw new IllegalStateException("진행중인 고충처리 게시글을 삭제할 수 없습니다.");
+        }
+
+        complaint.setDeleteDate(LocalDateTime.now());
+
+        return "complaint/list";
     }
 
 }
