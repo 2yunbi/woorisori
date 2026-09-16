@@ -1,10 +1,12 @@
 package com.woorisori.complaint.controller;
 
+import com.woorisori.complaint.domain.Complaint;
 import com.woorisori.complaint.dto.ComplaintDto;
 import com.woorisori.complaint.dto.ComplaintWithMember;
 import com.woorisori.complaint.service.ComplaintService;
 import com.woorisori.config.CustomUserDetails;
 import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -44,7 +46,7 @@ public class ComplaintController {
 
     @GetMapping("/list")
     public String findById(@AuthenticationPrincipal CustomUserDetails memberDetails, @RequestParam(defaultValue = "1") int page, Model model) {
-        Long loginId = memberDetails.getId();
+        long loginId = memberDetails.getId();
         long totalCount = complaintService.countMyComplaints(loginId);
 
         int totalPages = (int) Math.max(1,Math.ceil((double)(totalCount / PAGE_SIZE)));
@@ -59,6 +61,16 @@ public class ComplaintController {
         model.addAttribute("pageSize", PAGE_SIZE);
 
         return "/complaint/list";
+    }
+
+    @GetMapping("/{id}")
+    public String complaintDetailView(@AuthenticationPrincipal CustomUserDetails memberDetails, @PathVariable Long id, Model model) {
+        long longId = memberDetails.getId();
+
+        Complaint complaint = complaintService.complaintDetailView(id, longId);
+        model.addAttribute("complaint", complaint);
+
+        return "/complaint/detail";
     }
 
 }

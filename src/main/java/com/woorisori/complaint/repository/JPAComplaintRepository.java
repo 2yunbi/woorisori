@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public class JPAComplaintRepository implements ComplaintRepository {
 
@@ -15,6 +16,13 @@ public class JPAComplaintRepository implements ComplaintRepository {
         this.em = em;
     }
 
+    // 게시글 등록
+    @Transactional
+    @Override
+    public Complaint save(Complaint complaint) {
+        em.persist(complaint);
+        return complaint;
+    }
 
     @Override
     public List<Complaint> findAll() {
@@ -38,11 +46,13 @@ public class JPAComplaintRepository implements ComplaintRepository {
                 .getResultList();
     }
 
-    // 게시글 등록
-    @Transactional
-    @Override
-    public Complaint save(Complaint complaint) {
-        em.persist(complaint);
-        return complaint;
+    public Optional<Complaint> findByIdAndWriterID(long id, long writerId) {
+         List<Complaint> list = em.createQuery("select c from Complaint c where c.id = :id and c.writerId = :writerId", Complaint.class)
+                                .setParameter("id", id)
+                                .setParameter("writerId", writerId)
+                                .getResultList();
+        return list.stream().findAny();
     }
+
+
 }

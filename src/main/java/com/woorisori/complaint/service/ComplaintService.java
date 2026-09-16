@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,4 +37,7 @@ public class ComplaintService {
         return complaintRepository.findPageByWriterId(writerId, page, size);
     }
 
+    public Complaint complaintDetailView(long id, long writerId) {
+        return complaintRepository.findByIdAndWriterID(id, writerId).orElseThrow(() -> new IllegalStateException("글을 찾을 수 없습니다."));
+    }
 }
