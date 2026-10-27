@@ -42,10 +42,6 @@ public class Complaint {
         if (this.modifyDate == null) {
             this.modifyDate = LocalDateTime.now();
         }
-
-        if (this.deleteDate == null) {
-            this.deleteDate = LocalDateTime.now();
-        }
     }
 
     public long getId() {
